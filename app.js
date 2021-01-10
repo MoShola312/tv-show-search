@@ -1,5 +1,6 @@
 const form = document.getElementById('search')
 const resDisplay = document.getElementById('shows')
+// const divRow= document.querySelector('#shows')
 
 form.addEventListener('submit', async function(e){
 e.preventDefault();
@@ -19,41 +20,46 @@ resDisplay.innerHTML = ''
 })
 
 function makeImages (shows){
+
     for (let result of shows){
         if(result.show.image === null) {
-            const title = document.createElement('p')
-            // const title = document.querySelector('.card-title')
-            title.innerHTML=result.show.name
-
-            const img = document.createElement('IMG');
-            //set class attribute to .card-img-top
-            //appendTo(".card")
-        
-            img.src = "https://jpmedia.co/wp-content/uploads/2015/06/17_responsaradio_photography-mp3-image.jpg";
-
-            const hyperlink = document.createElement('a')
-            hyperlink.target = "_blank"
-            hyperlink.href = result.show.url
-            hyperlink.appendChild(img)
-
-            resDisplay.append(title, hyperlink)
-        } else {
-            // const title = document.createElement('p')
-            const title = document.querySelector('.card-title')
-            title.innerHTML=result.show.name
-
-            const img = document.createElement('IMG');
+            resDisplay.innerHTML +=
+                `<div class="col mb-4">
+                    <div class="card h-100" style="width: 18rem;">
+                        <a href=${result.show.url} target="_blank">
+                            <img src="https://jpmedia.co/wp-content/uploads/2015/06/17_responsaradio_photography-mp3-image.jpg" class="card-img-top" alt="...">
+                        </a>
+                            <div class="card-body">
+                                <h5 class="card-title">${result.show.name}</h5>
+                                <p class="card-text">${shrtText(result.show.summary)}</p>
+                            </div>
+                    </div>
+                </div>
+              `
             
-            img.src = result.show.image.medium;
-
-            const hyperlink = document.createElement('a')
-            hyperlink.target = "_blank"
-            hyperlink.href = result.show.url
-            hyperlink.appendChild(img)
-
-            resDisplay.append(title, hyperlink)
+        } else {
+            resDisplay.innerHTML +=
+            `
+                <div class="col mb-">
+                    <div class="card h-100" style="width: 18rem;">
+                        <a href=${result.show.url} target="_blank">
+                            <img src=${result.show.image.medium} class="card-img-top" alt="...">
+                        </a>
+                         <div class="card-body">
+                            <h5 class="card-title">${result.show.name}</h5>
+                            <p class="card-text">${shrtText(result.show.summary)}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+            
         }
         
     }
 }
 
+
+function shrtText (str) {
+    if(str.length > 100) str = str.substring(0,150)
+    return str
+}
