@@ -52,7 +52,7 @@ function makeImages (shows){
                     </div>
                 </div>
             `
-            
+               
         }
         
     }
